@@ -1,15 +1,15 @@
 import React from "react"
-import ThemeContext from "./ThemeContext"
+import {ThemeConsumer} from "./ThemeContext"
 
 function Footer(props) {
     return (
-        <ThemeContext.Consumer>
-            {theme => (
+        <ThemeConsumer>
+            {context => (
                 <footer>
-                    <h2 className={`${theme}-theme`}>{theme === "light" ? "Light" : "Dark"} Theme</h2>
+                    <h2 className={`${context.theme}-theme`}>{context.theme === "light" ? "Light" : "Dark"} Theme</h2>
                 </footer>
             )}
-        </ThemeContext.Consumer>
+        </ThemeConsumer>
     )
 }
 

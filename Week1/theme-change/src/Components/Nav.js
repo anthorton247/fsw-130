@@ -1,18 +1,18 @@
 import React from "react"
 import Button from "./Button"
-import ThemeContext from "./ThemeContext"
+import {ThemeConsumer} from "./ThemeContext"
 
 
 function Nav(props) {
     return (
-        <ThemeContext.Consumer>
-            {theme => (
+        <ThemeConsumer>
+            {context => (
                 <div>
-                    <Button theme={theme === "light" ? "dark-theme" : "light-theme"}/>
+                    <Button style={context.theme === "light" ? "dark-theme" : "light-theme"}/>
                 </div> 
             )}
             
-        </ThemeContext.Consumer>
+        </ThemeConsumer>
     )    
 }
 

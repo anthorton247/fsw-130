@@ -1,15 +1,15 @@
 import React from "react"
-import ThemeContext from "./ThemeContext"
+import {ThemeConsumer} from "./ThemeContext"
 
 function Header(props){
     return (
-        <ThemeContext.Consumer>
-            {theme => (
-                <header className={`${theme}-theme`}>
+        <ThemeConsumer>
+            {context => (
+                <header className={`${context.theme}-theme`}>
                     <h2>Theme Change App</h2>
                 </header>
             )}
-        </ThemeContext.Consumer>
+        </ThemeConsumer>
     )
 }
 
