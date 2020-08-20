@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {UglyConsumer} from "./Components/UglyContext"
 import AddUgly from "./Components/AddUgly"
 
-
 function App() {
   const [editToggle, setEditToggle] = useState(false)
 
@@ -18,25 +17,30 @@ function App() {
             <div>
               { !editToggle ?
               <>
-              {context.uglyThings.map(uglies => 
-                <div className= "container">
+              {context.uglyThings.map((uglies, index) => 
+                <div className= "container" key={uglies.title}>
                   <h1>{uglies.title}</h1>
                   <p>{uglies.description}</p>
                   <img src={uglies.imgUrl} alt= ""/>
-                  <ul> 
-                    {uglies.comments.map(comment => <li>{comment}</li>)}
+                  <ul className="comments"> 
+                    {uglies.comments.map((comment, index)=> <div className="list" key={index}><li >{comment} </li> <input className="delete" type="button" value="Delete" onClick={() => context.handleDelete(index, uglies.title)}/></div>)}
                   </ul>
                   <button className= 'commentButton' onClick= {() => setEditToggle(prevToggle => !prevToggle)}>Add Comment</button>
+                  <button className= 'commentButton' onClick= {() => context.deleteUgly(index, uglies.title)}>Delete Ugly</button>
+                  
                 </div>)}
               </>
               :
               <>
               {context.uglyThings.map(uglies => 
-                <div>
+                <div key={uglies.title}>
                   <div className= "container">
                     <h1>{uglies.title}</h1>
                     <p>{uglies.description}</p>
                     <img src={uglies.imgUrl} alt= ""/>
+                    <ul className="comments"> 
+                    {uglies.comments.map((comment, index)=> <div className="list" key={index}><li >{comment} </li> <input className="delete" type="button" value="Delete" onClick={() => context.handleDelete(index, uglies.title)}/></div>)}
+                  </ul>
                   </div>
                   <form className= "container">
                     <input 
@@ -49,7 +53,7 @@ function App() {
                     <input 
                       type= "button"
                       value= "Add Comment"
-                      onClick= {context.handleComment}
+                      onClick= {() => {context.handleComment(uglies.title); setEditToggle(prevToggle => !prevToggle)}} 
                     />
                   </form>
                   <div className= "container">

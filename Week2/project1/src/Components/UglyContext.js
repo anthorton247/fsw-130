@@ -27,7 +27,8 @@ class UglyProvider extends Component {
             const newUgly = {
                 title: prevState.uglyTitle,
                 imgUrl: prevState.uglyImgUrl,
-                description: prevState.uglyDesc
+                description: prevState.uglyDesc,
+                comments: []
             }
             return {
                 uglyThings: [newUgly, ...this.state.uglyThings]
@@ -35,18 +36,50 @@ class UglyProvider extends Component {
         })  
     }
 
-    handleComment = () => {
-        this.setState({
-                uglyThings: {comments: this.state.uglyThings.comments.push(this.state.uglyComment)}
-          })  
+    handleComment = (id) => {
+        for(let i = 0; i < this.state.uglyThings.length; i++){
+            if(this.state.uglyThings[i].title === id){
+                this.setState(prevState => {
+                    const newComment = prevState.uglyComment
+                    prevState.uglyThings[i].comments.push(newComment)
+                })
+            }     
+        }
+        console.log(this.state.uglyComment)
     }
+
+    handleDelete = (index, id) => {
+        for(let i = 0; i < this.state.uglyThings.length; i++){
+            if(this.state.uglyThings[i].title === id){
+                this.setState(prevState => {
+                    return(
+                        prevState.uglyThings[i].comments.splice(index, 1)
+                    )
+                })
+            }     
+        }
+    }
+
+    deleteUgly = (index, id) => {
+        for(let i = 0; i < this.state.uglyThings.length; i++){
+            if(this.state.uglyThings[i].title === id){
+                this.setState(prevState => {
+                    return(
+                        prevState.uglyThings.splice(index, 1)
+                    )
+                })
+            }     
+        }
+    }
+        
 
 
     render() {
+        console.log(this.state.uglyThings)
         return (
             <Provider value= {{uglyThings: this.state.uglyThings, uglyTitle: this.state.uglyTitle,
             uglyImgUrl: this.state.uglyImgUrl,
-            uglyDesc: this.state.uglyDesc, uglyComment: this.state.uglyComment, handleSubmit: this.handleSubmit, handleChange: this.handleChange, handleComment: this.handleComment}}>
+            uglyDesc: this.state.uglyDesc, uglyComment: this.state.uglyComment, handleSubmit: this.handleSubmit, handleChange: this.handleChange, handleComment: this.handleComment, handleDelete: this.handleDelete, deleteUgly: this.deleteUgly}}>
                 {this.props.children}
             </Provider>
         )
